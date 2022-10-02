@@ -161,7 +161,7 @@ function displayFormats(formats) {
 			cell = row.insertCell(-1);
 			cell.innerHTML = format['height'] + 'p';
 			if (typeof format['width'] == 'undefined') {
-			   cell.innerHTML = "";
+			   cell.innerHTML = format['bitrate'] / 1000 + " kb/s";
 			}else {
 			   cell.innerHTML = format['width'] + 'p';
 			}
