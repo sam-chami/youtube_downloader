@@ -1,7 +1,8 @@
-# client_side_youtube_downloader
-A client-sided web application for downloading content from Youtube
+# youtube_downloader
+A client sided website that can download youtube videos hosted on github pages.
 
-Inspired by youtube-dl (this is like a simplistic port of youtube-dl to javascript that can be used in a browser)
-https://github.com/ytdl-org/youtube-dl
+Forked from https://github.com/djiang9001/client_side_youtube_downloader
 
-Link: https://djiang9001.github.io/client_side_youtube_downloader/
+Link:
+ytdl.xamuel.xyz
+

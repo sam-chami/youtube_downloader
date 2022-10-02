@@ -161,7 +161,7 @@ function displayFormats(formats) {
 			cell = row.insertCell(-1);
 			cell.innerHTML = format['height'] + 'p';
 			if (typeof format['width'] == 'undefined') {
-			   cell.innerHTML = "Solo audio";
+			   cell.innerHTML = "";
 			}else {
 			   cell.innerHTML = format['width'] + 'p';
 			}
@@ -175,7 +175,6 @@ function displayFormats(formats) {
                         }
 		});
 	});
-	messageElement.innerHTML = "";
 }
 
 function resetPage() {
