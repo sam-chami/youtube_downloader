@@ -163,7 +163,7 @@ function displayFormats(formats) {
 			if (typeof format['width'] == 'undefined') {
 			   cell.innerHTML = "Solo audio";
 			}else {
-			   cell.innerHTML = format['width'] + 'x' + format['height'];
+			   cell.innerHTML = format['width'] + 'p';
 			}
 			//Format
                         cell = row.insertCell(-1);
