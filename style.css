@@ -1,0 +1,64 @@
+body {
+    background-color: #1B1A17;
+    color: azure;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, arial;
+    margin: 4px;
+    text-align: center;
+}
+
+a {
+    color: azure;
+    text-decoration-color: #eb4034;
+    text-decoration-style: dotted;
+}
+a:hover {
+    color: #eb4034;
+    text-decoration-style: dotted;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #eb4034;
+  color: white;
+}
+
+#message {
+  padding: 8px;
+}
+
+button {
+    background-color: #eb4034;
+    color: azure;
+    border-radius: 4px;
+    font-size: 106%;
+    padding: 6px;
+    margin: 6px;
+    border-color: azure;
+    border-style: solid;
+    box-shadow: 0 1px 2px 0 rgba(245, 217, 217, 0.3),0 4px 8px 2px rgba(124, 121, 121, 0.253);
+    transition: 250ms;
+}
+button:hover {
+    box-shadow: 0 1px 2px 0 rgba(245, 217, 217, 0.3),0 4px 8px 2px rgb(0, 0, 0);
+    filter: brightness(85%);
+    color: black;
+    border-color: black;
+}
+
+header { 
+   margin: 3%;
+   font-family: "Courier New", Courier, monospace, sans-serif, arial;
+   display: flex; 
+   justify-content: space-between; 
+   align-items: center;
+}

@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="es">
 <head>
-<title>Download Youtube Videos</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Downloader</title>
+    <meta name="description" content="A simple youtube video downloader">
+    <meta name="keywords" content="technology, projects, xamuel, sam-chami, portfolio, personal website">
+    <link rel="icon" href="data:image/x-icon;base64,AA">
 </head>
 <noscript>
     This page needs JavaScript to work properly!
 </noscript>
 <body>
-	<h1>Download Youtube videos</h1>
-	Youtube url: <input type="text" id="inputUrl"><br>
-	<button onclick="getVideos(inputUrl.value)">Submit</button>
-	<div id="message" class="resets"></div>
-	<table border="1" style="width:100%" id="download_links">
-		<thead><tr>
-			<th>Download Link</th>
-			<th>File Type</th>
-			<th>Resolution</th>
-			<th>FPS</th>
-			<th>Bitrate</th>
-			<th>Audio Sample Rate</th>
+      <h1><a href="https://ytdl.xamuel.xyz">ytdl.</a><a href="https://xamuel.xyz">xamuel.xyz</a></h1>
+      URL: <input size="33" style="display: inline-block; padding: 8px; border-radius: 4px; border: #eb4034 solid;" type="text" id="inputUrl">
+      <button style="display: inline-block;" onclick="getVideos(inputUrl.value)">Obtener</button>
+      <div id="message" class="resets"></div>
+      <table border="1" style="width:100%" id="download_links">
+	      <thead><tr>
+		<th>Descargar</th>
+		<th>Resolución</th>
+		<th>Formato</th>
 		<tr></thead>
-		<tbody id="tb" class="resets"></tbody>
-	</table>
+	      <tbody id="tb" class="resets"></tbody>
+      </table>
 </body>
 <script type="text/javascript" src="youtube_extractor.js"></script>
 <html>

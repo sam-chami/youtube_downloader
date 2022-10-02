@@ -13,19 +13,19 @@ function getVideos(inputUrl) {
 	resetPage();
 	var videoId = getVideoId(inputUrl);
 	if (!videoId) {
-		errorMessage("Error: Couldn't find video id in provided URL. If you know the video id, try entering only 'v={videoId}'");
+		errorMessage("Error: No se ha encontrado ningún ID de video en la URL provista.");
 	}
 	fetch(`https://cors-proxy-9001.herokuapp.com/https://youtube.com/watch?v=${videoId}`)
 		.then(response => {
 		// indicates whether the response is successful (status code 200-299) or not
 			if (!response.ok) {
-			  throw (`Request failed with status ${response.status}`);
+			  throw ('Error ${response.status}');
 			}
-			message("Reading page data...");
+			message("Leyendo");
 			response.text().then(text => parseRawHTML(text));
 		})
 		.catch(error => errorMessage(error));
-	message("Getting page data...");
+	message("Obteniendo datos");
 }
 
 function parseRawHTML(rawHTML) {
@@ -35,15 +35,15 @@ function parseRawHTML(rawHTML) {
 	var pattern = /ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|<\/script|\n)/;
 	var matches = pattern.exec(rawHTML);
 	if (!matches) {
-		errorMessage("Error: Could not parse raw HTML.");
+		errorMessage("Error: No se pudo analizar el HTML bruto.");
 	}
 	try {
 		var playerResponse = JSON.parse(matches[1]);
 	} catch (e) {
-		errorMessage("Error: Could not parse");
+		errorMessage("Error: Error al analizar");
 	}
 	if (!playerResponse.hasOwnProperty('streamingData')) {
-		errorMessage("Error: No stream data found");
+		errorMessage("Error: No se han encontrado los datos necesarios");
 	}
 	var streamingData = playerResponse.streamingData;
 	var regularFormats = streamingData['formats'];
@@ -68,7 +68,7 @@ function getDecipherFunction(formats, rawHTML) {
 	}
 	if (needDecipher) {
 		// Get decipher function
-		message("Deciphering signatures...");
+		message("Desencriptando firmas");
 		// Stole this regex from ytdl. See player_url in
 		// https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/extractor/youtube.py
 		var playerPattern = /(?:PLAYER_JS_URL|jsUrl)\"\s*:\s*\"([^\"]+)/;
@@ -79,9 +79,9 @@ function getDecipherFunction(formats, rawHTML) {
 			.then(response => {
 			// indicates whether the response is successful (status code 200-299) or not
 				if (!response.ok) {
-					throw (`Request failed with status ${response.status}`);
+					throw (`Error ${response.status}`);
 				}
-				message("Getting decipher function...");
+				message("Buscando función de desencriptado");
 				response.text().then(text => decipherURLs(formats, text));
 			})
 			.catch(error => errorMessage(error));
@@ -94,7 +94,7 @@ function getDecipherFunction(formats, rawHTML) {
 function decipherURLs(formats, rawJS) {
 	// Stole these regex from ytdl. See _parse_sig_js in
 	// https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/extractor/youtube.py
-	message("Deciphering...");
+	message("Desencriptando");
 	var patterns = [
 		/\b[cs]\s*&&\s*[adf]\.set\([^,]+\s*,\s*encodeURIComponent\s*\(\s*([a-zA-Z0-9$]+)\(/,
 		/\b[a-zA-Z0-9]+\s*&&\s*[a-zA-Z0-9]+\.set\([^,]+\s*,\s*encodeURIComponent\s*\(\s*([a-zA-Z0-9$]+)\(/,
@@ -121,7 +121,7 @@ function decipherURLs(formats, rawJS) {
 		}
 	}
 	if (matches == null) {
-		errorMessage("Error: Couldn't get decipher function.");
+		errorMessage("Error: No se pudo encontrar una función de  desencriptado.");
 	}
 	// The ultimate hack. We append functions that need to be run into the entire js and call eval
 	var toRun = rawJS.replace(/}\)\(_yt_player\);/, "return " + matches[1] + "\(\);}\)\(_yt_player\);");
@@ -155,26 +155,27 @@ function displayFormats(formats) {
 			var aTag = document.createElement('a');
 			aTag.setAttribute('href', format['url']);
 			aTag.setAttribute('target', '_blank');
-			aTag.innerHTML = "Click to preview. Right click and 'Save link as...' to download.";
+			aTag.innerHTML = "Descargar";
 			cell.appendChild(aTag);
-			//File Type
-			cell = row.insertCell(-1);
-			cell.innerHTML = format['mimeType'];
 			//Resolution
 			cell = row.insertCell(-1);
-			cell.innerHTML = format['width'] + 'x' + format['height'];
-			//FPS
-			cell = row.insertCell(-1);
-			cell.innerHTML = format['fps'];
-			//Bitrate
-			cell = row.insertCell(-1);
-			cell.innerHTML = format['bitrate'];
-			//Audio Sample Rate
-			cell = row.insertCell(-1);
-			cell.innerHTML = format['audioSampleRate'];
+			cell.innerHTML = format['height'] + 'p';
+			if (typeof format['width'] == 'undefined') {
+			   cell.innerHTML = "Solo audio";
+			}else {
+			   cell.innerHTML = format['width'] + 'x' + format['height'];
+			}
+			//Format
+                        cell = row.insertCell(-1);
+                        cell.innerHTML = format['height'] + 'p';
+                        if (typeof format['width'] == 'undefined') {
+                           cell.innerHTML = '<b style="background-color: red; padding: 4px; border-radius: 4px;">Audio</b>';
+                        }else {
+                           cell.innerHTML = '<b style="background-color: blue; padding: 4px; border-radius: 4px;">Video</b>';
+                        }
 		});
 	});
-	message("Done.");
+	messageElement.innerHTML = "";
 }
 
 function resetPage() {
